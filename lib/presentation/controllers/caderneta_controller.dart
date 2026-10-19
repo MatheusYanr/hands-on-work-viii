@@ -2,13 +2,13 @@ import 'package:flutter/foundation.dart';
 import 'package:caderneta_digital_fiado/domain/entities/customer.dart';
 import 'package:caderneta_digital_fiado/domain/usecases/register_customer.dart';
 import 'package:caderneta_digital_fiado/domain/usecases/record_purchase.dart';
-import 'package:caderneta_digital_fiado/domain/usecases/process_payment.dart';
 
-/// Controller desacoplado que orquestra as regras financeiras para a interface Flutter
+/// Controller da Caderneta de Fiado
+/// Conecta a interface gráfica Flutter aos casos de uso da regra de negócio
 class CadernetaController extends ChangeNotifier {
   final RegisterCustomer registerCustomerUseCase;
   final RecordPurchase recordPurchaseUseCase;
-  final ProcessPayment processPaymentUseCase;
+  // TODO (Matheus): Injetar o caso de uso ProcessPayment da segunda funcionalidade
 
   List<Customer> _customers = [];
   List<Customer> get customers => List.unmodifiable(_customers);
@@ -19,7 +19,6 @@ class CadernetaController extends ChangeNotifier {
   CadernetaController({
     required this.registerCustomerUseCase,
     required this.recordPurchaseUseCase,
-    required this.processPaymentUseCase,
   });
 
   Future<void> cadastrarCliente({
@@ -66,24 +65,7 @@ class CadernetaController extends ChangeNotifier {
     }
   }
 
-  Future<void> baixarPagamento({
-    required String customerId,
-    required double amount,
-  }) async {
-    _setLoading(true);
-    try {
-      final result = await processPaymentUseCase(
-        customerId: customerId,
-        amount: amount,
-      );
-      _replaceCustomer(result.customer);
-      errorMessage = null;
-    } catch (e) {
-      errorMessage = e.toString();
-    } finally {
-      _setLoading(false);
-    }
-  }
+  // TODO (Matheus): Adicionar método baixarPagamento({required String customerId, required double amount})
 
   void _replaceCustomer(Customer updated) {
     _customers = _customers.map((c) => c.id == updated.id ? updated : c).toList();

@@ -1,20 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:caderneta_digital_fiado/data/repositories/in_memory_customer_repository.dart';
+import 'package:caderneta_digital_fiado/domain/repositories/customer_repository.dart';
 import 'package:caderneta_digital_fiado/domain/usecases/register_customer.dart';
 import 'package:caderneta_digital_fiado/domain/usecases/record_purchase.dart';
-import 'package:caderneta_digital_fiado/domain/usecases/process_payment.dart';
 import 'package:caderneta_digital_fiado/presentation/controllers/caderneta_controller.dart';
 import 'package:caderneta_digital_fiado/presentation/pages/home_page.dart';
 
 void main() {
-  final repository = InMemoryCustomerRepository();
-  final controller = CadernetaController(
-    registerCustomerUseCase: RegisterCustomer(repository),
-    recordPurchaseUseCase: RecordPurchase(repository),
-    processPaymentUseCase: ProcessPayment(repository),
+  // TODO (Matheus): Instanciar a implementação da Camada de Dados (ex: CustomerRepositoryImpl)
+  // final repository = CustomerRepositoryImpl();
+  throw UnimplementedError(
+    'Aguardando implementação da Camada de Dados por Matheus (lib/data/repositories/customer_repository_impl.dart).'
   );
-
-  runApp(CadernetaApp(controller: controller));
 }
 
 class CadernetaApp extends StatelessWidget {
