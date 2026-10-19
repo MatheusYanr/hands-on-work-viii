@@ -1,0 +1,22 @@
+# Diretórios gerados pelo Flutter / Dart
+.dart_tool/
+.packages
+build/
+.pub-cache/
+.pub/
+
+# Cobertura de testes
+coverage/
+*.lcov
+
+# Arquivos de IDE e SO
+.idea/
+.vscode/
+*.iml
+*.iws
+*.ipr
+.DS_Store
+Thumbs.db
+*.log
+*.tmp
+*.bak

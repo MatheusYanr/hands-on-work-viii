@@ -1,0 +1,22 @@
+name: caderneta_digital_fiado
+description: "Aplicativo de Caderneta Digital de Fiado para pequenos comerciantes - TDD & Clean Architecture"
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  equatable: ^2.0.5
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  mocktail: ^1.0.4
+  flutter_lints: ^3.0.0
+
+flutter:
+  uses-material-design: true
