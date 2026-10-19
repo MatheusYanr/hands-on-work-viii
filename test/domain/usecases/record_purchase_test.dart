@@ -21,6 +21,16 @@ void main() {
         creditLimit: 500.0,
       ),
     );
+    registerFallbackValue(
+      CreditTransaction(
+        id: 'fallback-tx',
+        customerId: 'fallback-id',
+        amount: 10.0,
+        type: TransactionType.purchase,
+        description: 'Fallback',
+        timestamp: DateTime.now(),
+      ),
+    );
   });
 
   setUp(() {
@@ -65,7 +75,6 @@ void main() {
       when(() => mockRepository.getCustomerById('cust-1'))
           .thenAnswer((_) async => tCustomer);
 
-      // Cliente tem 50 de dívida e limite de 200. Tenta comprar 160 (total 210 > 200)
       expect(
         () => useCase(
           customerId: 'cust-1',

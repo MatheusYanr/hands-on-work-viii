@@ -21,6 +21,16 @@ void main() {
         creditLimit: 500.0,
       ),
     );
+    registerFallbackValue(
+      CreditTransaction(
+        id: 'fallback-tx',
+        customerId: 'fallback-id',
+        amount: 10.0,
+        type: TransactionType.payment,
+        description: 'Fallback',
+        timestamp: DateTime.now(),
+      ),
+    );
   });
 
   setUp(() {
@@ -50,7 +60,6 @@ void main() {
         amount: 50.0,
       );
 
-      // 120.0 - 50.0 = 70.0
       expect(result.customer.currentDebt, 70.0);
       expect(result.customer.availableCredit, 230.0);
       expect(result.transaction.amount, 50.0);
@@ -82,7 +91,6 @@ void main() {
       when(() => mockRepository.getCustomerById('cust-1'))
           .thenAnswer((_) async => tCustomerWithDebt);
 
-      // Dívida é 120. Tenta pagar 150.
       expect(
         () => useCase(
           customerId: 'cust-1',
