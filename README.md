@@ -2,20 +2,12 @@
 
 [![Flutter CI/CD](https://github.com/arthurliszkievich/hands-on-work-viii/actions/workflows/flutter.yml/badge.svg)](https://github.com/arthurliszkievich/hands-on-work-viii/actions/workflows/flutter.yml)
 [![TDD Methodology](https://img.shields.io/badge/Methodology-TDD%20(Red%2FGreen%2FRefactor)-blue.svg)](#comprova%C3%A7%C3%A3o-acad%C3%AAmica-do-ciclo-tdd-hist%C3%B3rico-de-commits)
-[![Coverage](https://img.shields.io/badge/Coverage-100%25%20Domain%20Rules-brightgreen.svg)](#417-m%C3%A9tricas-de-cobertura)
+[![Coverage](https://img.shields.io/badge/Coverage-100%25%20Domain%20Rules-brightgreen.svg)](#m%C3%A9tricas-e-cobertura)
 [![Clean Architecture](https://img.shields.io/badge/Architecture-Clean%20Architecture-success.svg)](#arquitetura-e-separa%C3%A7%C3%A3o-de-responsabilidades)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
 
-Repositório acadêmico oficial do trabalho prático **HOW VIII (Hands-On Work VIII)**.
-Solução móvel desenvolvida em **Flutter/Dart** para resolução de um problema comunitário crítico: a desorganização financeira de pequenos comerciantes locais que anotam dívidas em cadernos de papel e sofrem com erros de cálculo e perda de controle financeiro.
-
----
-
-## 📌 Links Rápidos para Entrega Acadêmica
-- 📄 **Textos Acadêmicos Prontos para o Word (ABNT - Seções 4.1.6 e 4.1.7):** [docs/DOCUMENTO_ACADEMICO_ABNT.md](docs/DOCUMENTO_ACADEMICO_ABNT.md)
-- 🎙️ **Roteiro Técnico de Gravação (1 Minuto exato para o Tech Lead):** [docs/ROTEIRO_DE_GRAVACAO.md](docs/ROTEIRO_DE_GRAVACAO.md)
-- ⚙️ **Workflow de CI/CD (GitHub Actions):** [.github/workflows/flutter.yml](.github/workflows/flutter.yml)
-- 🌐 **Repositório no GitHub:** [https://github.com/arthurliszkievich/hands-on-work-viii](https://github.com/arthurliszkievich/hands-on-work-viii)
+Repositório técnico oficial do trabalho prático **HOW VIII (Hands-On Work VIII)**.
+Solução móvel desenvolvida em **Flutter/Dart** para resolução de um problema comunitário crítico: a desorganização financeira de pequenos comerciantes locais que anotam dívidas em cadernos de papel e sofrem com erros de cálculo e perda de controle contábil.
 
 ---
 
@@ -25,7 +17,7 @@ Pequenos comerciantes (mercearias de bairro, feirantes, padarias e pequenos bare
 2. **Erros de Cálculo:** Erros manuais na soma de compras consecutivas ou na dedução de amortizações parciais;
 3. **Ausência de Travas de Crédito:** Falta de limites claros, gerando endividamento impagável do cliente e quebra do caixa do comerciante.
 
-A **Caderneta Digital de Fiado** foi construída para solucionar essa dor com **100% de confiabilidade técnica**, utilizando **Test-Driven Development (TDD)** e **Clean Architecture**, blindando as regras matemáticas do negócio contra qualquer inconsistência.
+A **Caderneta Digital de Fiado** soluciona essa dor com **100% de confiabilidade técnica**, utilizando **Test-Driven Development (TDD)** e **Clean Architecture**, blindando as regras matemáticas do negócio contra qualquer inconsistência.
 
 ---
 
@@ -68,9 +60,8 @@ HOW VIII/
 │   │       ├── register_customer_test.dart # Testes unitários do caso de uso de cadastro
 │   │       ├── record_purchase_test.dart   # Testes unitários do registro de fiado
 │   │       └── process_payment_test.dart   # Testes unitários da baixa de pagamentos
-└── docs/
-    ├── DOCUMENTO_ACADEMICO_ABNT.md # Seções 4.1.6 e 4.1.7 formatadas em norma culta
-    └── ROTEIRO_DE_GRAVACAO.md      # Roteiro segundo a segundo de 1 minuto
+└── tool/
+    └── demo_runner.dart            # Demonstração interativa das regras no terminal
 ```
 
 ---
@@ -97,9 +88,8 @@ git commit -m "test(payment): [RED] add unit tests for processing payment and de
 git commit -m "feat(payment): [GREEN] implement process_payment use case with debt deduction"
 git commit -m "refactor(payment): [REFACTOR] unify financial transaction assertions and clean code standards"
 
-# 5. Pipeline de CI/CD e Documentação Acadêmica
+# 5. Pipeline de CI/CD
 git commit -m "ci: configure GitHub Actions workflow for automated test run on push and PR"
-git commit -m "docs: add ABNT academic sections (4.1.6, 4.1.7) and 1-minute video recording script"
 ```
 
 ---
@@ -134,6 +124,9 @@ flutter test
 # 4. Executar os testes com extração de cobertura LCOV
 flutter test --coverage
 
-# 5. Executar a aplicação Flutter
+# 5. Executar a demonstração interativa no terminal
+dart run tool/demo_runner.dart
+
+# 6. Executar a aplicação Flutter (Web ou Desktop)
 flutter run
 ```

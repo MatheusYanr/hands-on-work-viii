@@ -21,6 +21,6 @@ Thumbs.db
 *.tmp
 *.bak
 
-# Arquivo de estudo pessoal do Arthur (ignorado no git)
+# Pasta de estudos privados e documentos acadêmicos (ignorado pelo Git)
+material_estudo/
 GUIA_DE_ESTUDO_PYTHON_JAVA.md
-
