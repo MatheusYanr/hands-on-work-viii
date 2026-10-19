@@ -20,3 +20,7 @@ Thumbs.db
 *.log
 *.tmp
 *.bak
+
+# Arquivo de estudo pessoal do Arthur (ignorado no git)
+GUIA_DE_ESTUDO_PYTHON_JAVA.md
+
