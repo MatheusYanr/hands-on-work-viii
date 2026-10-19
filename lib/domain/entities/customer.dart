@@ -1,7 +1,8 @@
 import 'package:equatable/equatable.dart';
 import 'package:caderneta_digital_fiado/core/errors/failures.dart';
 
-/// Entidade que representa o cliente da caderneta de fiado
+/// Entidade de Domínio: Cliente da Caderneta de Fiado
+/// Modela dados e invariantes de integridade do cliente
 class Customer extends Equatable {
   final String id;
   final String name;
@@ -11,12 +12,16 @@ class Customer extends Equatable {
 
   Customer({
     required this.id,
-    required this.name,
+    required String name,
     required this.phone,
     required this.creditLimit,
     this.currentDebt = 0.0,
-  }) {
-    if (name.trim().isEmpty) {
+  }) : name = name.trim() {
+    _validateInvariants();
+  }
+
+  void _validateInvariants() {
+    if (name.isEmpty) {
       throw const InvalidCustomerDataFailure('O nome do cliente não pode estar em branco.');
     }
     if (creditLimit <= 0) {
@@ -27,23 +32,20 @@ class Customer extends Equatable {
     }
   }
 
-  /// Limite de crédito ainda disponível para novos fiados
-  double get availableCredit => creditLimit - currentDebt;
+  /// Limite de crédito ainda disponível para novas compras no fiado
+  double get availableCredit => (creditLimit - currentDebt).clamp(0.0, creditLimit);
 
-  /// Cria uma nova instância com saldo modificado (imutabilidade)
-  Customer copyWith({
-    String? id,
-    String? name,
-    String? phone,
-    double? creditLimit,
-    double? currentDebt,
-  }) {
+  /// Verifica se o cliente possui margem disponível para determinado valor
+  bool canAfford(double amount) => (currentDebt + amount) <= creditLimit;
+
+  /// Retorna nova instância imutável com novo saldo devedor
+  Customer copyWithDebt(double newDebt) {
     return Customer(
-      id: id ?? this.id,
-      name: name ?? this.name,
-      phone: phone ?? this.phone,
-      creditLimit: creditLimit ?? this.creditLimit,
-      currentDebt: currentDebt ?? this.currentDebt,
+      id: id,
+      name: name,
+      phone: phone,
+      creditLimit: creditLimit,
+      currentDebt: newDebt,
     );
   }
 
