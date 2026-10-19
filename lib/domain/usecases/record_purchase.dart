@@ -14,9 +14,6 @@ class PurchaseResult {
 }
 
 /// Caso de Uso: Registrar nova compra no fiado
-/// - Valida valor positivo
-/// - Garante que nova dívida não ultrapassa o limite de crédito do cliente
-/// - Soma o valor da compra ao saldo devedor
 class RecordPurchase {
   final CustomerRepository repository;
 
@@ -38,16 +35,8 @@ class RecordPurchase {
       throw const CustomerNotFoundFailure('Cliente não encontrado.');
     }
 
-    if (!customer.canAfford(amount)) {
-      throw CreditLimitExceededFailure(
-        'Limite de fiado excedido! Limite: R\$ ${customer.creditLimit.toStringAsFixed(2)}, '
-        'Dívida atual: R\$ ${customer.currentDebt.toStringAsFixed(2)}, '
-        'Disponível: R\$ ${customer.availableCredit.toStringAsFixed(2)}.',
-      );
-    }
-
-    final newDebt = customer.currentDebt + amount;
-    final updatedCustomer = customer.copyWithDebt(newDebt);
+    // Delega a regra de negócio e validação de limite à própria entidade de domínio
+    final updatedCustomer = customer.increaseDebt(amount);
 
     final transaction = CreditTransaction(
       id: 'tx-${DateTime.now().microsecondsSinceEpoch}',

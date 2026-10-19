@@ -1,8 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:caderneta_digital_fiado/core/errors/failures.dart';
 
-/// Entidade de Domínio: Cliente da Caderneta de Fiado
-/// Modela dados e invariantes de integridade do cliente
+/// Entidade Rica de Domínio: Cliente da Caderneta de Fiado
 class Customer extends Equatable {
   final String id;
   final String name;
@@ -35,8 +34,31 @@ class Customer extends Equatable {
   /// Limite de crédito ainda disponível para novas compras no fiado
   double get availableCredit => (creditLimit - currentDebt).clamp(0.0, creditLimit);
 
-  /// Verifica se o cliente possui margem disponível para determinado valor
+  /// Verifica se o cliente tem capacidade de crédito para a nova operação
   bool canAfford(double amount) => (currentDebt + amount) <= creditLimit;
+
+  /// Adiciona uma nova dívida validando o limite máximo de fiado
+  Customer increaseDebt(double amount) {
+    if (!canAfford(amount)) {
+      throw CreditLimitExceededFailure(
+        'Limite de crédito excedido. Limite: R\$ ${creditLimit.toStringAsFixed(2)}, '
+        'Dívida atual: R\$ ${currentDebt.toStringAsFixed(2)}, '
+        'Disponível: R\$ ${availableCredit.toStringAsFixed(2)}.',
+      );
+    }
+    return copyWithDebt(currentDebt + amount);
+  }
+
+  /// Amortiza o saldo devedor
+  Customer decreaseDebt(double amount) {
+    if (amount > currentDebt) {
+      throw PaymentExceedsDebtFailure(
+        'O valor do pagamento (R\$ ${amount.toStringAsFixed(2)}) excede a dívida atual '
+        '(R\$ ${currentDebt.toStringAsFixed(2)}).',
+      );
+    }
+    return copyWithDebt(currentDebt - amount);
+  }
 
   /// Retorna nova instância imutável com novo saldo devedor
   Customer copyWithDebt(double newDebt) {
